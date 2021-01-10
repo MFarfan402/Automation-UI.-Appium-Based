@@ -1,0 +1,16 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "Automatic test for BlueGo App",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "keywords": [],
+  "author": "Mauricio Farfan",
+  "license": "ISC",
+  "dependencies": {
+    "webdriverio": "^6.10.11"
+  }
+}
