@@ -11,6 +11,7 @@
   "author": "Mauricio Farfan",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "webdriverio": "^6.10.11"
   }
 }

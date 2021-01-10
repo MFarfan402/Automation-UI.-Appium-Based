@@ -10,6 +10,8 @@ const acceptPermissions = async client => {
     setTimeout(() => { appHandler.touchPerformByCoordinates(client, 535, 848); }, 2000);
 }
 
+const debug = () => { console.log("Debug xd"); };
+
 async function main () {
 
 
@@ -19,10 +21,13 @@ async function main () {
     //await field.setValue("1111111111");
 
 	let client = await webdriverio.remote(desiredCapabilities.REAL_DEVICE_OPTIONS);
-    await acceptPermissions(client);
+    setTimeout(() => { appHandler.touchPerformByCoordinates(client, 535, 848); }, 7000);
+    setTimeout(() => { appHandler.touchPerformByCoordinates(client, 535, 848); }, 2000);
+
+    //await acceptPermissions(client);
 
 	// let field = await client.findElementByXPath("//android.widget.LinearLayout[5]/android.widget.EditText");
-	setTimeout(()=>{}, 3000);
+	setTimeout(debug, 3000);
 	
     const field = await client.$("android.widget.EditText");
     await field.setValue("1111111111");

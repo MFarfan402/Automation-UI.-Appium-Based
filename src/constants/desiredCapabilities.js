@@ -1,10 +1,18 @@
+require("dotenv").config({
+    path: "./.env",
+});
+
+const {
+    APPIUM_SERVER_PATH,
+    APPIUM_SERVER_PORT
+} = process.env;
 
 const APK_PATH = "C:\\Users\\MFARFAN\\Desktop\\Exodus\\Automation\\bgo.apk";
 // const APK_PATH = "C:\\Users\\MFARFAN\\Desktop\\Exodus\\Automation\\ApiDemos-debug.apk"
 
 const REAL_DEVICE_OPTIONS = {
-    path: '/wd/hub',
-    port: 4723,
+    path: APPIUM_SERVER_PATH,
+    port: parseInt(APPIUM_SERVER_PORT),
     capabilities: {
         platformName: "Android",
         platformVersion: "9",
@@ -15,8 +23,8 @@ const REAL_DEVICE_OPTIONS = {
 };
 
 const EMULATOR_DEVICE_OPTIONS = {
-    path: '/wd/hub',
-    port: 4723,
+    path: APPIUM_SERVER_PATH,
+    port: parseInt(APPIUM_SERVER_PORT),
     capabilities: {
         platformName: "Android",
         platformVersion: "8",
