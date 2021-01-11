@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "rxjs": "^6.6.3",
     "webdriverio": "^6.10.11"
   }
 }

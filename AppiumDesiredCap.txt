@@ -1,0 +1,17 @@
+{
+    "platformName": "Android",
+    "platformVersion": "9",
+    "deviceName": "5DN6R20320008960",
+    "app": "C:\\Users\\MFARFAN\\Desktop\\Exodus\\Automation\\Test\\ApiDemos-debug.apk",
+    "appPackage": "io.appium.android.apis",
+    "appActivity": ".view.TextFields",
+    "automationName": "UiAutomator2"
+}
+
+{
+    "platformName": "Android",
+    "platformVersion": "9",
+    "deviceName": "5DN6R20320008960",
+    "app": "C:\\Users\\MFARFAN\\Desktop\\Exodus\\Automation\\bgo.apk"
+    "automationName": "UiAutomator2"
+}
