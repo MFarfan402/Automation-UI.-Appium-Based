@@ -19,7 +19,7 @@ const REAL_DEVICE_OPTIONS = {
         deviceName: "5DN6R20320008960",
         app: APK_PATH,
         automationName: "UiAutomator2"
-  }
+    }
 };
 
 const EMULATOR_DEVICE_OPTIONS = {

@@ -6,6 +6,15 @@ const touchPerformByCoordinates = (client, x, y) => {
     ]);
 };
 
+const wait_ms = (ms) => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve(ms)
+        }, ms)
+    })
+};
+
 module.exports = {
-    touchPerformByCoordinates
+    touchPerformByCoordinates,
+    wait_ms
 };
