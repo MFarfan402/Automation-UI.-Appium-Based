@@ -1,6 +1,6 @@
 
-const touchPerformByCoordinates = (client, x, y) => {
-    client.touchPerform([
+const touchPerformByCoordinates = async (client, x, y) => {
+    await client.touchPerform([
         {action: 'press', options:{x: x, y: y}},
         {action: 'release'}
     ]);
@@ -16,5 +16,5 @@ const wait_ms = (ms) => {
 
 module.exports = {
     touchPerformByCoordinates,
-    wait_ms
+    wait_ms,
 };

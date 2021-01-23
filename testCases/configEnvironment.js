@@ -1,6 +1,5 @@
 const appHandler = require("../src/constants/handlerEvents");
 const methods = require("../src/methods");
-const { WEBDRIVER_CLIENT } = require("../src/constants/constants");
 
 
 require("dotenv").config({
@@ -11,6 +10,11 @@ const {
     ADMIN_USER,
     ADMIN_PASSWORD
 } = process.env;
+let WEBDRIVER_CLIENT = null;
+
+const setClient = client => {
+    WEBDRIVER_CLIENT = client;
+};
 
 const acceptAndroidPermissions = async() => {
     try {
@@ -36,12 +40,13 @@ const selectInstance = async() => {
     }
 }
 
-const run = async() => {
+const run = async client => {
+    setClient(client);
     await acceptAndroidPermissions();
-    await methods.writeCredentials(ADMIN_USER, ADMIN_PASSWORD);
-    await methods.nextWindow();
+    await methods.writeCredentials(ADMIN_USER, ADMIN_PASSWORD, client);
+    await methods.nextWindow(client);
     await selectInstance();
-    await methods.nextWindow();
+    await methods.nextWindow(client);
 }
 
 
