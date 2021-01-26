@@ -28,20 +28,14 @@ const nextButton = async(client, word) => {
 
 // WARNING: Fragile test. Using coordinates to display an action
 const logOut = async(client) => {
-    try {
-        appHandler.touchPerformByCoordinates(client, 92, 137);
+    appHandler.touchPerformByCoordinates(client, 92, 137);
 
-        let textView = await client.$(XPATH_STRINGS.textViewLogOutConfig);
-        await textView.click();
+    let textView = await client.$(XPATH_STRINGS.textViewLogOutConfig);
+    await textView.click();
 
-        textView = await client.$(XPATH_STRINGS.textViewLogOut);
-        await textView.click();
-
-    } catch (error) {
-        console.error(error);
-        throw new Error();
-    }
-};
+    textView = await client.$(XPATH_STRINGS.textViewLogOut);
+    await textView.click();
+}
 
 module.exports = { 
     writeTelephone, 

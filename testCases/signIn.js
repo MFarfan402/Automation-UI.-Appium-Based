@@ -1,7 +1,7 @@
 const appHandler = require("../src/utilities/handlerEvents");
 const generalFunctions = require("../src/utilities/general");
 const methods = require("../src/utilities/methods");
-const { VALIDATION_STRINGS, XPATH_STRINGS, FAILED_ASSERTION} = require("../src/constants/strings")
+const { VALIDATION_STRINGS, XPATH_STRINGS, FAILED_ASSERTION} = require("../src/constants/strings");
 const assert = require("assert");
 
 require("dotenv").config({
@@ -70,30 +70,13 @@ const checkPasswordComponent = async () => {
     // Check if the component is not showing the password.
     field = await webDriverClient.$(XPATH_STRINGS.editText);
     assert.notStrictEqual(await field.getText(), "1234 5", FAILED_ASSERTION.passwordComponent);
+    await generalFunctions.wait_ms(1000);
 }
 
-const forgotPassword = async () => {
-    let button = await webDriverClient.$(XPATH_STRINGS.textViewForgotPassword);
-    await button.click();
-    await generalFunctions.wait_ms(2000);
-
-    // Check if the component has the telephone of the user.
-    let field = await webDriverClient.$(XPATH_STRINGS.editText);
-    assert.strictEqual(await field.getText(), DEFAULT_USER, FAILED_ASSERTION.notSameUser);
-
-    /* SIGUIENTE BUTTON for future implementations */
-
+const returnMain = async () => {
     let backButton = await webDriverClient.$(XPATH_STRINGS.backButton);
     await backButton.click();
-
-    // Check functionality of the back component 
-    let textAssertion = await webDriverClient.$(XPATH_STRINGS.textViewPassword);
-    assert.strictEqual(await textAssertion.getText(), VALIDATION_STRINGS.passwordActivity, FAILED_ASSERTION.notCorrectActivty);
-
-    backButton = await webDriverClient.$(XPATH_STRINGS.backButton);
-    await backButton.click();
 }
-
 
 const run = async client => {
     setClient(client);
@@ -101,7 +84,7 @@ const run = async client => {
     await methods.logOut(client);
     await runWrongCredentials();
     await checkPasswordComponent();
-    await forgotPassword();
+    await returnMain();
 }
 
 module.exports = { run };

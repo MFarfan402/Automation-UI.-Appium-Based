@@ -19,5 +19,8 @@
 {
     # CSS-Selector
     = Link text
-    
 }
+
+To do list: 
+* Añadir aserciones en mensajes de error controlados.
+
