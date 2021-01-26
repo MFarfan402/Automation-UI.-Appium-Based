@@ -1,31 +1,107 @@
-const appHandler = require("../src/constants/handlerEvents");
-const methods = require("../src/methods");
-const { VALIDATION_STRINGS } = require("../src/constants/strings")
+const appHandler = require("../src/utilities/handlerEvents");
+const generalFunctions = require("../src/utilities/general");
+const methods = require("../src/utilities/methods");
+const { VALIDATION_STRINGS, XPATH_STRINGS, FAILED_ASSERTION} = require("../src/constants/strings")
 const assert = require("assert");
 
-const runHappyPath = async client => {
-    try { 
-        await methods.writeCredentials("2222222222", "123456789", client);
-        await methods.nextWindow(client);
-        appHandler.touchPerformByCoordinates(client, 355, 870);
+require("dotenv").config({
+    path: "../.env",
+});
 
-        await appHandler.wait_ms(2000);
+const {
+    DEFAULT_USER,
+    DEFAULT_PASSWORD
+} = process.env;
 
-        let textView = await client.$("//android.widget.TextView[contains(@text, '" +
-            VALIDATION_STRINGS.logInAssertion + "')]");
-    
-        assert.strictEqual(await textView.getText(), VALIDATION_STRINGS.logInAssertion);
+let webDriverClient = null;
+const setClient = client => {
+    webDriverClient = client;
+};
 
-        await methods.logOut(client);
-    } catch (error ){
-        console.error(error);
-        throw new Error();
-    }
-    
+const runHappyPath = async() => {
+    await methods.writeTelephone(DEFAULT_USER, webDriverClient);
+    await methods.writePassword(DEFAULT_PASSWORD, webDriverClient);
+
+    // Check if we are in the correct activity
+    let textAssertion = await webDriverClient.$(XPATH_STRINGS.textViewPassword);
+    assert.strictEqual(await textAssertion.getText(), VALIDATION_STRINGS.passwordActivity, FAILED_ASSERTION.notCorrectActivty);
+
+    await methods.nextButton(webDriverClient, "SIGUIENTE");
+    await methods.nextButton(webDriverClient, "OK");
+    await generalFunctions.wait_ms(2000);
+
+    // Check if we are in the correct activity
+    let textView = await webDriverClient.$(XPATH_STRINGS.textViewLogIn);
+    assert.strictEqual(await textView.getText(), VALIDATION_STRINGS.logInAssertion, FAILED_ASSERTION.notCorrectActivty);
+}
+
+const signBadPassword = async (password) => {
+    await methods.writePassword(password, webDriverClient);
+    await methods.nextButton(webDriverClient, "SIGUIENTE");
+    await generalFunctions.wait_ms(1000);    
+    let buttonOk = await webDriverClient.$(XPATH_STRINGS.button);
+    await buttonOk.click();
+    await generalFunctions.wait_ms(1000); 
+}
+
+const runWrongCredentials = async () => {
+    await methods.writeTelephone(DEFAULT_USER, webDriverClient);
+
+    // Check if we are in the correct activity
+    let textAssertion = await webDriverClient.$(XPATH_STRINGS.textViewPassword);
+    assert.strictEqual(await textAssertion.getText(), VALIDATION_STRINGS.passwordActivity, FAILED_ASSERTION.notCorrectActivty);
+
+    // TestCases could be random generated. This is an example of use.
+    await signBadPassword("");
+    await signBadPassword("(90e21?{eg");
+    await signBadPassword("1234 5");
+}
+
+// WARNING: Fragile test. Using coordinates to display an action
+const checkPasswordComponent = async () => {
+    await appHandler.touchPerformByCoordinates(webDriverClient, 606, 606);
+
+    // Check if the component is displaying the password.
+    let field = await webDriverClient.$(XPATH_STRINGS.editText);
+    assert.strictEqual(await field.getText(), "1234 5", FAILED_ASSERTION.notSamePassword);
+
+    await appHandler.touchPerformByCoordinates(webDriverClient, 606, 606);
+
+    // Check if the component is not showing the password.
+    field = await webDriverClient.$(XPATH_STRINGS.editText);
+    assert.notStrictEqual(await field.getText(), "1234 5", FAILED_ASSERTION.passwordComponent);
+}
+
+const forgotPassword = async () => {
+    let button = await webDriverClient.$(XPATH_STRINGS.textViewForgotPassword);
+    await button.click();
+    await generalFunctions.wait_ms(2000);
+
+    // Check if the component has the telephone of the user.
+    let field = await webDriverClient.$(XPATH_STRINGS.editText);
+    assert.strictEqual(await field.getText(), DEFAULT_USER, FAILED_ASSERTION.notSameUser);
+
+    /* SIGUIENTE BUTTON for future implementations */
+
+    let backButton = await webDriverClient.$(XPATH_STRINGS.backButton);
+    await backButton.click();
+
+    // Check functionality of the back component 
+    let textAssertion = await webDriverClient.$(XPATH_STRINGS.textViewPassword);
+    assert.strictEqual(await textAssertion.getText(), VALIDATION_STRINGS.passwordActivity, FAILED_ASSERTION.notCorrectActivty);
+
+    backButton = await webDriverClient.$(XPATH_STRINGS.backButton);
+    await backButton.click();
 }
 
 
-module.exports = {
-    runHappyPath
+const run = async client => {
+    setClient(client);
+    await runHappyPath();
+    await methods.logOut(client);
+    await runWrongCredentials();
+    await checkPasswordComponent();
+    await forgotPassword();
+}
 
-};
+module.exports = { run };

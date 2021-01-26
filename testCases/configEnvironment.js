@@ -1,5 +1,6 @@
-const appHandler = require("../src/constants/handlerEvents");
-const methods = require("../src/methods");
+const generalFunctions = require("../src/utilities/general");
+const methods = require("../src/utilities/methods");
+const { XPATH_STRINGS } = require("../src/constants/strings");
 
 
 require("dotenv").config({
@@ -10,22 +11,22 @@ const {
     ADMIN_USER,
     ADMIN_PASSWORD
 } = process.env;
-let WEBDRIVER_CLIENT = null;
 
+let webDriverClient = null;
 const setClient = client => {
-    WEBDRIVER_CLIENT = client;
+    webDriverClient = client;
 };
 
 const acceptAndroidPermissions = async() => {
     try {
-        await appHandler.wait_ms(3000);
-        let buttonAllowCamara = await WEBDRIVER_CLIENT.$("//android.widget.Button[2]");
+        await generalFunctions.wait_ms(2000);
+        let buttonAllowCamara = await webDriverClient.$(XPATH_STRINGS.acceptButton);
         await buttonAllowCamara.click();
-        await appHandler.wait_ms(3000);
+        await generalFunctions.wait_ms(2000);
         
-        let buttonAllowLocation = await WEBDRIVER_CLIENT.$("//android.widget.Button[2]");
+        let buttonAllowLocation = await webDriverClient.$(XPATH_STRINGS.acceptButton);
         await buttonAllowLocation.click();
-        await appHandler.wait_ms(3000);
+        await generalFunctions.wait_ms(2000);
     } catch (error) {
         console.error(error);
     }
@@ -33,8 +34,10 @@ const acceptAndroidPermissions = async() => {
 
 const selectInstance = async() => {
     try {
-        await appHandler.wait_ms(3000);
-        appHandler.touchPerformByCoordinates(WEBDRIVER_CLIENT, 214, 488);
+        await generalFunctions.wait_ms(2000);
+
+        let field = await webDriverClient.$(XPATH_STRINGS.textViewInstance);
+        await field.click();
     } catch (error) {
         console.error(error);
     }
@@ -43,13 +46,12 @@ const selectInstance = async() => {
 const run = async client => {
     setClient(client);
     await acceptAndroidPermissions();
-    await methods.writeCredentials(ADMIN_USER, ADMIN_PASSWORD, client);
-    await methods.nextWindow(client);
+    await methods.writeTelephone(ADMIN_USER, client);
+    await methods.writePassword(ADMIN_PASSWORD, client);
+    await methods.nextButton(client, "SIGUIENTE");
     await selectInstance();
-    await methods.nextWindow(client);
+    await methods.nextButton(client, "GUARDAR");
 }
 
 
-module.exports = { 
-    run
-};
+module.exports = { run };
