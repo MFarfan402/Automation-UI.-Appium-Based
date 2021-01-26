@@ -22,7 +22,7 @@ const setClient = client => {
 const goToActivity = async () => {
     await methods.writeTelephone(DEFAULT_USER, webDriverClient);
 
-    let button = await webDriverClient.$(XPATH_STRINGS.textViewForgotPassword);
+    let button = await webDriverClient.$(generalFunctions.XPathQueryTextView("Olvidé mi contraseña"));
     await button.click();
     await generalFunctions.wait_ms(1000);
 
@@ -56,12 +56,10 @@ const testForgotPassword = async () => {
     await methods.nextButton(webDriverClient, "CONFIRMAR");
     await generalFunctions.wait_ms(2000);
 
-    let passwordField = await webDriverClient.$(XPATH_STRINGS.editTextString + 
-        "Escribe mínimo 8 números')]");
+    let passwordField = await webDriverClient.$(generalFunctions.XPathQueryEditText("Escribe mínimo 8 números"));
     await passwordField.setValue("12345678");
 
-    passwordField = await webDriverClient.$(XPATH_STRINGS.editTextString + 
-        "Confirma tu contraseña')]");
+    passwordField = await webDriverClient.$(generalFunctions.XPathQueryEditText("Confirma tu contraseña"));
     await passwordField.setValue("12345678");
 
     await methods.nextButton(webDriverClient, "GUARDAR");
@@ -73,7 +71,6 @@ const run = async client => {
     setClient(client);
     await goToActivity();
     await testForgotPassword();
-    
     //await methods.logOut(client);
 }
 

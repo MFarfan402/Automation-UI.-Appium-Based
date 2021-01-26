@@ -21,7 +21,8 @@ const writeTelephone = async(user, client) => {
 }
 
 const nextButton = async(client, word) => {
-    let button = await client.$(XPATH_STRINGS.nextButton + word + "')]");
+    let button = await client.$(generalFunctions.XPathQueryTextView(word));
+
     await button.click();
     await generalFunctions.wait_ms(1000);
 }
@@ -30,10 +31,10 @@ const nextButton = async(client, word) => {
 const logOut = async(client) => {
     appHandler.touchPerformByCoordinates(client, 92, 137);
 
-    let textView = await client.$(XPATH_STRINGS.textViewLogOutConfig);
+    let textView = await client.$(generalFunctions.XPathQueryTextView("Configuración"));
     await textView.click();
 
-    textView = await client.$(XPATH_STRINGS.textViewLogOut);
+    textView = await client.$(generalFunctions.XPathQueryTextView("Cerrar sesión"));
     await textView.click();
 }
 
