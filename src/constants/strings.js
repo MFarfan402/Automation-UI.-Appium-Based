@@ -12,6 +12,7 @@ const FAILED_ASSERTION = {
 };
 
 // Future implementation: Construct an interface to accept these strings.
+// This is a test
 const XPATH_STRINGS = {
     editText: "android.widget.EditText",
     button: "android.widget.Button",
