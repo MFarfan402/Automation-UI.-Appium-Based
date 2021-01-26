@@ -23,7 +23,8 @@ const runHappyPath = async() => {
     await methods.writePassword(DEFAULT_PASSWORD, webDriverClient);
 
     // Check if we are in the correct activity
-    let textAssertion = await webDriverClient.$(XPATH_STRINGS.textViewPassword);
+    let textAssertion = await webDriverClient.$(
+        generalFunctions.XPathQueryTextView(VALIDATION_STRINGS.passwordActivity));
     assert.strictEqual(await textAssertion.getText(), VALIDATION_STRINGS.passwordActivity, FAILED_ASSERTION.notCorrectActivty);
 
     await methods.nextButton(webDriverClient, "SIGUIENTE");
@@ -31,7 +32,7 @@ const runHappyPath = async() => {
     await generalFunctions.wait_ms(2000);
 
     // Check if we are in the correct activity
-    let textView = await webDriverClient.$(XPATH_STRINGS.textViewLogIn);
+    let textView = await webDriverClient.$(generalFunctions.XPathQueryTextView(VALIDATION_STRINGS.logInAssertion));
     assert.strictEqual(await textView.getText(), VALIDATION_STRINGS.logInAssertion, FAILED_ASSERTION.notCorrectActivty);
 }
 
@@ -48,7 +49,8 @@ const runWrongCredentials = async () => {
     await methods.writeTelephone(DEFAULT_USER, webDriverClient);
 
     // Check if we are in the correct activity
-    let textAssertion = await webDriverClient.$(XPATH_STRINGS.textViewPassword);
+    let textAssertion = await webDriverClient.$(
+        generalFunctions.XPathQueryTextView(VALIDATION_STRINGS.passwordActivity));
     assert.strictEqual(await textAssertion.getText(), VALIDATION_STRINGS.passwordActivity, FAILED_ASSERTION.notCorrectActivty);
 
     // TestCases could be random generated. This is an example of use.

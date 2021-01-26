@@ -33,7 +33,7 @@ const acceptAndroidPermissions = async() => {
 }
 
 const selectInstance = async() => {
-    let field = await webDriverClient.$(XPATH_STRINGS.textViewInstance);
+    let field = await webDriverClient.$(generalFunctions.XPathQueryTextView("Pruebas"));
     await field.click();
     await generalFunctions.wait_ms(1000);
 }

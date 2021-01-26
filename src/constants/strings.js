@@ -11,20 +11,18 @@ const FAILED_ASSERTION = {
     notCorrectActivty: "Assert made not in the correct activity"
 };
 
-// Future implementation: Construct an interface to accept these strings.
 const XPATH_STRINGS = {
+    // Android Components
     editText: "android.widget.EditText",
     button: "android.widget.Button",
+
+    //XPathQueries
     acceptButton: "//android.widget.Button[2]",
-    editTextString: "//android.widget.EditText[contains(@text, '",
-    nextButton:"//android.widget.TextView[contains(@text, '",
     backButton:"//android.widget.TextView[contains(@text, '')]",
-    textViewLogOut: "//android.widget.TextView[contains(@text, 'Cerrar sesión')]",
-    textViewLogOutConfig: "//android.widget.TextView[contains(@text, 'Configuración')]",
-    textViewInstance: "//android.widget.TextView[contains(@text, 'Pruebas')]",
-    textViewForgotPassword: "//android.widget.TextView[contains(@text, 'Olvidé mi contraseña')]",
-    textViewLogIn: "//android.widget.TextView[contains(@text, '" + VALIDATION_STRINGS.logInAssertion + "')]",
-    textViewPassword: "//android.widget.TextView[contains(@text, '" + VALIDATION_STRINGS.passwordActivity + "')]",
+    
+    //XPathQueries - Basic 
+    textViewString:"//android.widget.TextView[contains(@text, '",
+    editTextString: "//android.widget.EditText[contains(@text, '",
 }
 
 module.exports = {
