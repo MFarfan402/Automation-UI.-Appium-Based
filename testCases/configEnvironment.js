@@ -33,14 +33,9 @@ const acceptAndroidPermissions = async() => {
 }
 
 const selectInstance = async() => {
-    try {
-        await generalFunctions.wait_ms(2000);
-
-        let field = await webDriverClient.$(XPATH_STRINGS.textViewInstance);
-        await field.click();
-    } catch (error) {
-        console.error(error);
-    }
+    let field = await webDriverClient.$(XPATH_STRINGS.textViewInstance);
+    await field.click();
+    await generalFunctions.wait_ms(1000);
 }
 
 const run = async client => {

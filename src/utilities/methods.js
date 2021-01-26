@@ -23,7 +23,7 @@ const writeTelephone = async(user, client) => {
 const nextButton = async(client, word) => {
     let button = await client.$(XPATH_STRINGS.nextButton + word + "')]");
     await button.click();
-    await generalFunctions.wait_ms(2000);
+    await generalFunctions.wait_ms(1000);
 }
 
 // WARNING: Fragile test. Using coordinates to display an action
