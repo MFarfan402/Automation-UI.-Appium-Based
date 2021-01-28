@@ -17,14 +17,19 @@ const setClient = client => {
     webDriverClient = client;
 };
 
-const acceptAndroidPermissions = async() => {
+const acceptAndroidPermissions = async(androidVersion) => {
     try {
+
         await generalFunctions.wait_ms(2000);
-        let buttonAllowCamara = await webDriverClient.$(XPATH_STRINGS.acceptButton);
+        let buttonAllowCamara = (androidVersion == 9) ? 
+            await webDriverClient.$(XPATH_STRINGS.acceptButton) : 
+            await webDriverClient.$(XPATH_STRINGS.acceptButtonAndroid10);
         await buttonAllowCamara.click();
         await generalFunctions.wait_ms(2000);
         
-        let buttonAllowLocation = await webDriverClient.$(XPATH_STRINGS.acceptButton);
+        let buttonAllowLocation = (androidVersion == 9) ? 
+            await webDriverClient.$(XPATH_STRINGS.acceptButton) : 
+            await webDriverClient.$(XPATH_STRINGS.acceptButtonAndroid10);
         await buttonAllowLocation.click();
         await generalFunctions.wait_ms(2000);
     } catch (error) {
@@ -38,9 +43,9 @@ const selectInstance = async() => {
     await generalFunctions.wait_ms(1000);
 }
 
-const run = async client => {
+const run = async (client, androidVersion) => {
     setClient(client);
-    await acceptAndroidPermissions();
+    await acceptAndroidPermissions(androidVersion);
     await methods.writeTelephone(ADMIN_USER, client);
     await methods.writePassword(ADMIN_PASSWORD, client);
     await methods.nextButton(client, "SIGUIENTE");

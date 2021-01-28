@@ -85,7 +85,7 @@ const run = async client => {
     await runHappyPath();
     await methods.logOut(client);
     await runWrongCredentials();
-    await checkPasswordComponent();
+    //await checkPasswordComponent();
     await returnMain();
 }
 

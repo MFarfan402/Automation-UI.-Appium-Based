@@ -11,8 +11,9 @@ const forgotPassword = require("./testCases/forgotPassword");
 async function main () {
 
     let client = await webdriverio.remote(desiredCapabilities.REAL_DEVICE_OPTIONS);
+    let androidVersion = desiredCapabilities.REAL_DEVICE_OPTIONS.capabilities.platformVersion;
 
-    await configEnvironment.run(client);
+    await configEnvironment.run(client, androidVersion);
     await signInCases.run(client);
     await forgotPassword.run(client);
     

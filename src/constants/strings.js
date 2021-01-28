@@ -18,6 +18,7 @@ const XPATH_STRINGS = {
 
     //XPathQueries
     acceptButton: "//android.widget.Button[2]",
+    acceptButtonAndroid10: "//android.widget.Button[1]",
     backButton:"//android.widget.TextView[contains(@text, '')]",
     
     //XPathQueries - Basic 
