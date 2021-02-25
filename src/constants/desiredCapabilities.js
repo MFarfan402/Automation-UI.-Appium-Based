@@ -3,34 +3,25 @@ require("dotenv").config({
 });
 
 const {
+    APPIUM_HOSTNAME,
     APPIUM_SERVER_PATH,
     APPIUM_SERVER_PORT,
-    APPIUM_SERVER_PORT2,
-    DEVICE_ID_MAU
+    //APK_PATH,
+    BROWSERSTACK_USER,
+    BROWSERSTACK_KEY,
 } = process.env;
 
 const APK_PATH = "C:\\Users\\MFARFAN\\Desktop\\Exodus\\Automation\\bgo.apk";
-// const APK_PATH = "C:\\Users\\MFARFAN\\Desktop\\Exodus\\Automation\\ApiDemos-debug.apk"
+//const APK_PATH = "C:\\Users\\admintest\\Desktop\\VersionAppAppium\\bgo.apk";
 
 const REAL_DEVICE_OPTIONS = {
+    //hostname: APPIUM_HOSTNAME,
     path: APPIUM_SERVER_PATH,
     port: parseInt(APPIUM_SERVER_PORT),
     capabilities: {
         platformName: "Android",
         platformVersion: "9",
         deviceName: "5DN6R20320008960",
-        app: APK_PATH,
-        automationName: "UiAutomator2"
-    }
-};
-
-const MAU_DEVICE = {
-    path: APPIUM_SERVER_PATH,
-    port: parseInt(APPIUM_SERVER_PORT2),
-    capabilities: {
-        platformName: "Android",
-        platformVersion: "10",
-        deviceName: DEVICE_ID_MAU,
         app: APK_PATH,
         automationName: "UiAutomator2"
     }
@@ -45,12 +36,11 @@ const EMULATOR_DEVICE_OPTIONS = {
         deviceName: "AutomaticTest",
         app: APK_PATH,
         appPackage: "io.appium.android.apis",
-        appActivity: ".view.TextFields"        
+        appActivity: ".view.TextFields"
     }
 }
 
 module.exports = {
     REAL_DEVICE_OPTIONS,
-    EMULATOR_DEVICE_OPTIONS,
-    MAU_DEVICE
+    EMULATOR_DEVICE_OPTIONS
 };
